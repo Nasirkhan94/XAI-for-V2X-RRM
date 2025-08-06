@@ -1,0 +1,74 @@
+
+-------- marl, marl_model_Original------
+Number of trainable parameters per agent: 343092
+Avg. strategy_time_all_agents_per_step: 0.02493sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.02018sec 
+
+Number of trainable parameters per agent: 13592
+Avg. strategy_time_all_agents_per_step: 0.00733sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.0029sec 
+
+-------- marl, marl_model_Original------
+Number of trainable parameters per agent: 32960
+Avg. strategy_time_all_agents_per_step: 0.00872sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00435sec 
+-------- marl, marl_model_Original------
+Number of trainable parameters per agent: 343092
+Avg. strategy_time_all_agents_per_step: 0.03363sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.0297sec 
+-------- marl, marl_model_Original_8------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01181sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00108sec 
+-------- marl, marl_model_Original_8------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01135sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00092sec 
+-------- marl, marl_model_Original_8------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01201sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00096sec 
+-------- marl, marl------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.0119sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00101sec 
+-------- marl, marl------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.0115sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00102sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 343092
+Avg. strategy_time_all_agents_per_step: 0.00549sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00042sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01195sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00103sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01172sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00098sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01161sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00098sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01181sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00099sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01181sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00096sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01168sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00101sec 
+-------- marl, marl_4------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01152sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00102sec 
+-------- marl, marl_model_Original_8------
+Number of trainable parameters per agent: 402964
+Avg. strategy_time_all_agents_per_step: 0.01092sec 
+Avg. time_optimization_at_each_slot_all_agents: 0.00065sec 

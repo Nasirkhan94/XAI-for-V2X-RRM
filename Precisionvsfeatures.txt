@@ -1,0 +1,56 @@
+-------- marl, marl_model_Original------
+features_retained: [22, 22, 21, 21, 20, 19, 19, 18, 16, 15]
+precision threshold:[0.05, 0.1, 0.15000000000000002, 0.2, 0.25, 0.3, 0.35000000000000003, 0.4, 0.45, 0.5]
+-------- marl, marl_model_Original------
+features_retained: [20, 19, 18, 17, 16, 15, 13, 9, 7, 5]
+precision threshold:[0.05, 0.1, 0.15000000000000002, 0.2, 0.25, 0.3, 0.35000000000000003, 0.4, 0.45, 0.5]
+-------- marl, marl_model_Original------
+features_retained: [22, 21, 21, 21, 21, 21, 20, 20, 20, 20]
+precision threshold:[0.02, 0.04, 0.06, 0.08, 0.1, 0.12000000000000001, 0.13999999999999999, 0.16, 0.18, 0.19999999999999998]
+-------- marl, marl_model_Original------
+features_retained: [15, 15, 14, 13, 12, 11, 10, 9, 7, 7]
+precision threshold:[0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2]
+-------- marl, marl_model_Original------
+features_retained: [23, 23, 22, 22, 22, 21, 21, 21, 10, 10]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+features_retained: [21, 21, 21, 12, 10, 10, 10, 10, 10, 10]
+precision threshold:[0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14]
+-------- marl, marl_model_Original------
+features_retained: [23, 22, 22, 21, 21, 21, 12, 10, 10, 10]
+precision threshold:[0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11]
+-------- marl, marl_model_Original------
+features_retained: [23, 22, 21, 21, 19, 12, 12, 11, 9, 8]
+precision threshold:[0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[23 19 18 17 16  4  0  8 21  5 22 20  1 12  2  6  9  7 13  3 14 10 15 11]
+features_retained: [23, 23, 21, 21, 21, 19, 12, 11, 10, 9]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original copy_TRAINED WELL------
+feature_ranking= np.argsort(feature_importance):[23 16 18 19 17  4  0  8  5 21 22 20  1  6  7 12  2  9 13 10  3 14 15 11]
+features_retained: [21, 20, 19, 19, 18, 18, 18, 18, 18, 17]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  4  0  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  4  0  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  4  0  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  4  0  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  4  0  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+-------- marl, marl_model_Original------
+feature_ranking= np.argsort(feature_importance):[19 17 18 16 23  0  4  2 20 12  1  9  8  3 13 10 21  5 11 22  6 14 15  7]
+features_retained: [21, 20, 20, 19, 19, 19, 18, 18, 18, 18]
+precision threshold:[0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
