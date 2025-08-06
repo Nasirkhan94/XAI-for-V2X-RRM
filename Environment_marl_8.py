@@ -132,10 +132,8 @@ class Environ:
         self.n_neighbor = n_neighbor
         self.time_fast = 0.001
         self.time_slow = 0.1  # update slow fading/vehicle position every 100 ms
-        self.bandwidth = int(400e3)  ## int(1e6)  # bandwidth per RB, 1 MHz
-        # self.bandwidth = 1500
-        self.demand_size = int((4 * 190 + 300) * 8 * 2)  # V2V payload: 1060 Bytes every 100 ms
-        # self.demand_size = 20
+        self.bandwidth = int(180e3)  
+        
         
 
         self.V2V_Interference_all = np.zeros((self.n_Veh, self.n_neighbor, self.n_RB)) + self.sig2
@@ -407,10 +405,10 @@ class Environ:
         
         self.network_avg_throughput.append( np.sum((64/blocklength)*(1- error_all) )) ## sum(R*(1-epsilon))
         
-        if np.max(error_all) < 1e-3:
-            self.metric=1
-        else:
-            self.metric=0
+        # if np.max(error_all) < 1e-3:
+        #     self.metric=1
+        # else:
+        #     self.metric=0
             
         
         # self.metric = np.where(np.array(np.max(error_all)) < 1e-3,1,0)  # metrics for XAI
@@ -673,5 +671,6 @@ class Environ:
     
     def get_first_n_items(self,dictionary, n):
         return dict(list(dictionary.items())[:n])
+
 
 
