@@ -6,7 +6,6 @@ import numpy as np
 from math import log, e
 import time 
 import os
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
 
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior() 
@@ -74,45 +73,14 @@ def get_first_n_items(dictionary, n):
 def get_state(env, idx=(0,0) ):
     """ Get state from the environment """
         
-    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :] - 80)/60 
-    
-    # V2I_fast_names =[ 'V2I_channel_(strongest)', 'V2I_channel_((2nd strongest)', 'V2I_channel_(3rd strongest)', 'V2I_channel_(weakest)']
-    # V2I_fast_dict= env.create_state_space_dictionary( V2I_fast_names, np.sort(   V2I_fast.reshape(-1))[::-1] )
-    # sorted_V2I= dict(sorted(  V2I_fast_dict.items(), key=lambda item: item[1], reverse=True))
-    # print(sorted_V2I)
-    
+    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :])
 
-    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :] - 80)/60 
-    # V2V_fast_names =['V2V_channel_(Strongest)', 'V2V_channel_(2nd strongest)', 'V2V_channel_(3rd strongest)','V2V_channel_(4th strongest)',\
-    #                   'V2V_channel_(5th strongest)','V2V_channel_(6th strongest)',\
-    #                       'V2V_channel_(7th strongest)','V2V_channel_(8th strongest)','V2V_channel_(9th strongest)',\
-    #                           'V2V_channel_(10th strongest)','V2V_channel_(11th strongest)' ,'V2V_channel_(12th strongest)','V2V_channel_(13th strongest)',\
-    #                             'V2V_channel_(14th strongest)','V2V_channel_(15th strongest)', 'V2V_channel_(weakest)']
-    # V2V_fast_dict= env.create_state_space_dictionary( V2V_fast_names, np.sort(   V2V_fast.reshape(-1))[::-1] )
-    # sorted_V2V= dict(sorted(  V2V_fast_dict.items(), key=lambda item: item[1], reverse=True))
-    # print(sorted_V2V)
-    
-    
-    
-    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :] - 60) / 60
-    # V2V_intrfr_names =['Interference power_(strongest)', 'Interference power_(2nd strongest)', 'Interference power_(3rd strongest)', 'Interference power_(weakest)']
-    # V2V_intrfr_dict= env.create_state_space_dictionary( V2V_intrfr_names, np.sort(    V2V_interference.reshape(-1))[::-1] )
-    # sorted_V2V_intrfr= dict(sorted(  V2V_intrfr_dict.items(), key=lambda item: item[1], reverse=True))
 
-    # combined_state = {}
-    # combined_state.update(sorted_V2I)
-    # combined_state.update(sorted_V2V)
-    # combined_state.update(sorted_V2V_intrfr)
+    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :])
     
-    # feature_ranking = np.array([23, 19, 18, 17, 16, 4, 0, 8, 21, 5, 22, 20, 1, 12, 2, 6, 9, 7, 13, 3, 14, 10, 15, 11]) # sorted in ascending
-  
-    # combined_state_values = np.array(list(combined_state.values()))
-    # return  combined_state_values
-    # Extract the last 19 elements of feature_ranking as indices as they are most importnat
-    # indices = feature_ranking[-15:]  
-
-    # extracted_elements = combined_state_values[indices]
-    # return   extracted_elements
+    
+    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :])
+    
     return np.concatenate((V2I_fast, np.reshape(V2V_fast, -1), V2V_interference))
 ##########################################################################
 # -----------------------------------------------------------
@@ -121,14 +89,6 @@ n_hidden_2 = 250
 n_hidden_3 = 120
 n_input = len(get_state(env=env))
 n_output = n_RB * len(env.V2V_power_dB_List)
-
-# n_hidden_1 = len(get_state(env))*5
-# n_hidden_2 = len(get_state(env))*3
-# n_hidden_3 = len(get_state(env))*2
-# n_input = len(get_state(env=env))
-# n_output = n_RB * len(env.V2V_power_dB_List)
-
-
 
 g = tf.Graph()
 with g.as_default():
@@ -443,17 +403,14 @@ if IS_TRAIN:
 def get_state_test(env, idx=(0,0), ind_episode=1, epsi=0.02):
     """ Get state from the environment """
     
-    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :] - 80)/60 
+    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :])
     
     V2I_fast_names =[ 'V2I_channel_(strongest)', 'V2I_channel_((2nd strongest)', 'V2I_channel_(3rd strongest)', 'V2I_channel_(weakest)']
     V2I_fast_dict= env.create_state_space_dictionary( V2I_fast_names, np.sort(   V2I_fast.reshape(-1))[::-1] )
     sorted_V2I= dict(sorted(  V2I_fast_dict.items(), key=lambda item: item[1], reverse=True))
     # print(sorted_V2I)
     
-    
-    
-  
-    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :] - 80)/60 
+    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :] )
     V2V_fast_names =['V2V_channel_(strongest)', 'V2V_channel_(2nd strongest)', 'V2V_channel_(3rd strongest)','V2V_channel_(4th strongest)',\
                       'V2V_channel_(5th strongest)','V2V_channel_(6th strongest)',\
                           'V2V_channel_(7th strongest)','V2V_channel_(8th strongest)','V2V_channel_(9th strongest)',\
@@ -465,7 +422,7 @@ def get_state_test(env, idx=(0,0), ind_episode=1, epsi=0.02):
     
     
     
-    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :] - 60) / 60
+    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :])
     V2V_intrfr_names =['Interference power_(strongest)', 'Interference power_(2nd strongest)', 'Interference power_(3rd strongest)', 'Interference power_(weakest)']
     V2V_intrfr_dict= env.create_state_space_dictionary( V2V_intrfr_names, np.sort(    V2V_interference.reshape(-1))[::-1] )
     sorted_V2V_intrfr= dict(sorted(  V2V_intrfr_dict.items(), key=lambda item: item[1], reverse=True))
@@ -688,18 +645,12 @@ if IS_TEST:
     reliability_rand_path = os.path.join(folder_path, 'reliability_rand.mat')
     scipy.io.savemat(reliability_rand_path, {'reliability_rand': V2V_success_list_rand})
 
-   
-    
-    
-    
+
     
     ###############################################################
     #####################  SHAP and XAI  ##########################
-   
     #init the JS visualization code
-    # explainers=np.zeros([ n_veh, n_neighbor])
     shap.initjs()
-        
 
     state_dataframe=pd.DataFrame(state_data_dict)
     feature_names_list =state_dataframe.columns.tolist()  ## use this to get names from pd frame
@@ -716,29 +667,24 @@ if IS_TEST:
     for i in range(n_veh):     
         for j in range(n_neighbor):
             SHAP_x= SHAP_train[:,i,:] ## SHAP matrix for each vehicle  [samples x number of features]
-            # X_test.append(state_log_test[-5, :, i, :]) ## taking the 100 steps of last episode for each vehicle
+
             X_test.append(SHAP_x[:test_size_sampler])
             background =  SHAP_x[np.random.choice( SHAP_x.shape[0], 3000, replace=False)]
             
-            x_tensor = x   # <tf.Tensor 'Placeholder:0' shape=(?, 29) dtype=float32>
-            y_tensor = y # 20 values 5 power and 4 RBs. <tf.Tensor 'Relu_3:0' shape=(?, 20) dtype=float32>
+            x_tensor = x  
+            y_tensor = y 
             model= (x_tensor,y_tensor)
             
             explainer = shap.DeepExplainer(model, background,sesses[i*n_neighbor+j] ) 
             print("#########################")
             print("stuck after this")
             print("#########################")
-            Shap_values.append(explainer.shap_values(X_test[i]))  ## (list of arrays-->n_classes x n_samples x n_variables) 
-                                                                ## normally it gets the test data to output shap values
+            Shap_values.append(explainer.shap_values(X_test[i]))  
     for i in range(n_veh):                                                           
-            # plt.figure(i+1) 
-            # plt.figure()
-            # plt.figure(figsize=(20,10))
+ 
             plt.rcParams.update({'font.size': 16})
             plt.figure(figsize=(10, 8))  # Adjust the width and height as needed
-           
-             # shap.summary_plot(shap_values, plot_type = 'bar',max_display=1000, feature_names = feature_names_list, class_names=class_name_p_bl)
-            # shaps= np.apply_along_axis(lambda x: np.exp(x) / np.sum(np.exp(x)), axis=2, arr= Shap_values) #Apply softmax along the rows (axis=1)                  
+               
             shap.summary_plot( np.mean(np.abs(np.array( Shap_values[i] )),axis= 1),  plot_type = 'bar',max_display=1000, feature_names = feature_names_list, color= 'mediumorchid')  
             plt.xticks(fontsize=16)  # Adjust the font size as needed
             plt.yticks(fontsize=16)  # Adjust the font size as needed
@@ -775,19 +721,9 @@ if IS_TEST:
     plt.savefig(path_to_save,bbox_inches='tight',dpi=1000 )
     plt.show()  
     
-    ###################  ###################  ###################
-    ###################  ###################  ###################
-    ###################  ###################  ###################
-
     def evaluation_model(X_data):   
         metric_list_simple=[]
         for idx_episode in range(1): ## here we test over a single episode to calculate the reliability only
-              # print('----- Episode', idx_episode, '-----')
-            
-              # env.renew_positions() 
-              # env.renew_neighbor()
-              # env.renew_channel()
-              # env.renew_channels_fastfading()
             
               metric_per_episode_simple=[]
               for test_step in range(test_size_sampler): ## 100 steps to match the size of test dataset
@@ -807,19 +743,11 @@ if IS_TEST:
                   action_temp = action_all_testing.copy()
                   V2I_rate, V2V_success, V2V_rate,  effec_rate, test_reward = env.act_for_testing(action_temp)
                   metric_per_episode_simple.append(V2V_success)
-    
-                  # update the environment and compute interference
-                  # env.renew_channels_fastfading()
-                  # env.Compute_Interference(action_temp)
 
               metric_list_simple.append(np.mean(metric_per_episode_simple))  # metrics for XAI list
               metric_list_simple.count(1.0)
               # Calculate the percentage of ones
               percentage_ones = (metric_list_simple.count(1) / len(metric_list_simple)) * 100
-              # Output the result
-              # print("Percentage of ones in the list:", percentage_ones)
-                
-        # print('Metric per episode length is:', len(metric_per_episode_simple), "metric_list_simple contains:", metric_list_simple ) 
          
         return metric_per_episode_simple,  percentage_ones,   round(np.average(metric_list_simple), 3)  
     
@@ -842,17 +770,11 @@ if IS_TEST:
         return X_rand_copy  # Return the modified test dataset with randomized features
 
 
-    # X_test_rand = randomize_features(np.array(X_test), feature_ranking[:f] , noise_scale=5 )
-
     def evaluate_reliability_difference(alpha_original, alpha_random, precision_threshold):  
     # Evaluate the difference in reliability and compare it with the precision threshold
         
         return abs(alpha_original-alpha_random) >= precision_threshold
-
  
-    
-   #######################################################################################
-   ##########################################################################################    
     # Define the number of least important features to consider
     features_retained=[]
     
@@ -875,11 +797,6 @@ if IS_TEST:
             
             alpha_original_list.append( alpha_original)
             alpha_random_list.append( alpha_random)
-            
-            ###############
-            ###############
-            ###############
-        
         
             if evaluate_reliability_difference(alpha_original, alpha_random, precision_threshold=p) :
                 print("important enough feature randomized")
@@ -891,10 +808,6 @@ if IS_TEST:
                 break
             else:
                 print("not important: updating the f value to: ", f+1 )
-                # print("original  model metric for reliability:", alpha_original)
-                # print("simplified model metric for reliability:", alpha_random)
-                # print("Percentage reliability original:", percentage_ones_original)
-                # print("Percentage reliability random:", percentage_ones_rand)
                 f += 1
         
  
@@ -909,159 +822,6 @@ if IS_TEST:
         f.write('features_retained: ' + str(features_retained) + '\n')
         f.write('precision threshold:' + str(precision_threshold_list) + '\n')
        
-
-
-
-    # Plotting eatures Retained vs Precision Threshold
-    plt.figure()
-    # Your data
-    # precision_threshold_list = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
-    # features_retained = [20, 19, 18, 17, 16, 15, 13, 9, 7, 5]
-    
-    # Plotting
-    plt.plot(precision_threshold_list, features_retained, marker='o')
-    for i, txt in enumerate(features_retained):
-        plt.text(precision_threshold_list[i], txt, str(txt), ha='right')
-    plt.xlabel('Precision threshold ($\Delta$)')
-    plt.ylabel('Optimal features retained')
-    # plt.title('Features Retained vs Precision Threshold')
-    
-    # Set x-ticks manually
-    plt.xticks(precision_threshold_list)
-    
-    # Save the figure to the specified path
-    path_to_save = r'C:\Users\nkhan20\Desktop\XAI_Simplified\XAI_plots\featuresvsthreshold_new.pdf'
-    plt.savefig(path_to_save,bbox_inches='tight',dpi=1000 )
-    plt.show()
-    
-    
-    
-   
-    # Assuming alphas_random_threshold is a list of lists
-    initial_values = [lst[0] for lst in alpha_original_list]
-    differences = [lst[-1] for lst in alphas_random_threshold]
-    
-    # Plotting
-    x = np.arange(len(initial_values))  # the label locations
-    width = 0.35  # the width of the bars
-    
-    fig, ax = plt.subplots()
-    rects1 = ax.bar(x - width/2, initial_values, width, label='Original model')
-    rects2 = ax.bar(x + width/2, differences, width, label='Simplified model')
-    
-    # Add some text for labels, title and custom x-axis tick labels, etc.
-    ax.set_xlabel('Precision threshold ($ \\Delta$)')
-    ax.set_ylabel('Average network-wide reliability ($ \\alpha$)')
-    # ax.set_title('Initial Values and Differences')
-    ax.set_xticks(np.arange(len(precision_threshold_list)))
-    ax.set_xticklabels(precision_threshold_list)  # Set the x-axis labels
-    ax.legend()
-    
-    # Label with label_type 'edge'
-    for rect in rects1:
-        height = rect.get_height()
-        ax.annotate(f'{height*100:.0f}%', xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 0.5),  # 3 points vertical offset
-                    textcoords="offset points",
-                    ha='center', va='bottom')
-    
-    for rect in rects2:
-        height = rect.get_height()
-        ax.annotate(f'{height*100:.0f}%', xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 0.5),  # 3 points vertical offset
-                    textcoords="offset points",
-                    ha='center', va='bottom')
-    
-    fig.tight_layout()
-    path_to_save = r'C:\Users\nkhan20\Desktop\XAI_Simplified\XAI_plots\Average network-wide reliability.pdf'
-    plt.savefig(path_to_save,bbox_inches='tight',dpi=1000 )
-    plt.show()
-
-                ###################
-     
-    # sum_abs_shap= np.sum(np.abs(np.array(Shap_values)),axis=1) ## take abs sum across all classess for all vehicles
-    # sum_softmax= np.apply_along_axis(lambda x: np.exp(x) / np.sum(np.exp(x)), axis=1, arr= sum_abs_shap) #Apply softmax along the rows (axis=2)                  
-    # sum_avg=  sum_softmax.mean(0) ## take mean across all vehicles
-    # sum_avg=  sum_abs_shap.mean(0) ## take mean across all vehicles 
-    
-
-   
-
-        ################################################################
-            
-
-# close sessions
-for sess in sesses:
-    sess.close()
-
-###########################################################################
-###########################################################################
-###########################################################################
-
-
-def smooth( Episode_Return,WSZ):
-    # a: NumPy 1-D array containing the data to be smoothed
-    # WSZ: smoothing window size needs, which must be odd number,
-    # as in the original MATLAB implementation
-    out0 = np.convolve(Episode_Return,np.ones(WSZ,dtype=int),'valid')/WSZ    
-    r = np.arange(1,WSZ-1,2)
-    start = np.cumsum(Episode_Return[:WSZ-1])[::2]/r
-    stop = (np.cumsum(Episode_Return[:-WSZ:-1])[::2]/r)[::-1]
-    return np.concatenate((  start , out0, stop  ))
-
-def plot_training_rewards( rewards):
-          # Calculate a moving average of rewards
-          window_size = 1000
-          moving_avg = [np.mean(rewards[i:i+window_size]) for i in range(len(rewards) - window_size + 1)]
-     
-          # Create a time axis for x-axis
-          episodes = range(len(rewards))
-     
-          # Plot the rewards and moving average
-          plt.figure(figsize=(10, 6))
-          plt.plot(episodes, smooth(rewards,105), label='Training Rewards', alpha=0.4)
-          plt.plot(episodes[window_size - 1:], moving_avg, label=f'Moving Average (window={window_size})', color='r')
-          plt.xlabel('Training step')
-          plt.ylabel('Reward per time step ')
-          plt.legend()
-          # plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-          # plt.title('Training Rewards in DRL')
-          plt.grid(True)
-          plt.show()
-          plt.savefig('./figures/_%s_%d'%('training_plot',n_veh)+'.pdf', format='pdf', dpi=1000)
-         
-def plot_training_reliability( rewards):
-          # Calculate a moving average of rewards
-          window_size = 1000
-          moving_avg = [np.mean(rewards[i:i+window_size]) for i in range(len(rewards) - window_size + 1)]
-     
-          # Create a time axis for x-axis
-          episodes = range(len(rewards))
-     
-          # Plot the rewards and moving average
-          plt.figure(figsize=(10, 6))
-          plt.plot(episodes, smooth(rewards,105), label='Training Rewards', alpha=0.4)
-          plt.plot(episodes[window_size - 1:], moving_avg, label=f'Moving Average (window={window_size})', color='r')
-          # plt.axhline(y=1e-2, color='k', linestyle='-', label='$\epsilon_{o}=10^{-5}$')
-          plt.xlabel('Training step')
-          # plt.ylabel('Network Reliability (1-max $\varepsilon_{k}$)')
-          plt.ylabel('Network Reliability (1-max $\{\\varepsilon_{k} \}$)')
-          # plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-          plt.legend()
-          # plt.title('Training Rewards in DRL')
-          plt.grid(True)
-          plt.show()
-          plt.savefig('./figures/_%s_%d'%('reliability_plot',n_veh)+'.pdf', format='pdf', dpi=1000)
-
- 
-
-
-
-# plot_training_rewards(record_reward.reshape(-1))
-
-# plot_training_reliability(env.reliability_list)
-
-# plot_training_reliability(env.network_avg_throughput)
 
 
 
