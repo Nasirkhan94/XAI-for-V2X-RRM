@@ -385,7 +385,7 @@ class Environ:
         
         # print( "effec_rate", effec_rate)
        
-        C_minus_R=  V2V_Rate- 64/blocklength
+        C_minus_R=  V2V_Rate- 100/blocklength
         fun= math.log(2)*(np.sqrt(blocklength/dispersion))* C_minus_R                 
         error_all= 0.5 - 0.5*special.erf(fun/np.sqrt(2)) # Q(f) = 0.5 - 0.5 erf(f/sqrt(2))                
         
@@ -403,7 +403,7 @@ class Environ:
 
         self.reward_check.append(reward_elements)
         
-        self.network_avg_throughput.append( np.sum((64/blocklength)*(1- error_all) )) ## sum(R*(1-epsilon))
+        self.network_avg_throughput.append( np.sum((100/blocklength)*(1- error_all) )) ## sum(R*(1-epsilon))
         
         # if np.max(error_all) < 1e-3:
         #     self.metric=1
@@ -485,7 +485,7 @@ class Environ:
         
         # print( "effec_rate", effec_rate)
        
-        C_minus_R=  V2V_Rate- 64/blocklength
+        C_minus_R=  V2V_Rate- 100/blocklength
         fun= math.log(2)*(np.sqrt(blocklength/dispersion))* C_minus_R                 
         error_all= 0.5 - 0.5*special.erf(fun/np.sqrt(2)) # Q(f) = 0.5 - 0.5 erf(f/sqrt(2))                
         
@@ -499,7 +499,7 @@ class Environ:
         self.reliability_list_rand.append(np.max(error_all))
         self.reward_check_rand.append(reward_elements)
         
-        self.network_avg_throughput.append( np.sum((64/blocklength)*(1- error_all) ) ) ## sum(R*(1-epsilon))
+        self.network_avg_throughput.append( np.sum((100/blocklength)*(1- error_all) ) ) ## sum(R*(1-epsilon))
         
         # print('errors are', (error_all).reshape(1,-1))
         
@@ -671,6 +671,7 @@ class Environ:
     
     def get_first_n_items(self,dictionary, n):
         return dict(list(dictionary.items())[:n])
+
 
 
 
