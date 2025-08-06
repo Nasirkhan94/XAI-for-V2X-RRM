@@ -132,10 +132,8 @@ class Environ:
         self.n_neighbor = n_neighbor
         self.time_fast = 0.001
         self.time_slow = 0.1  # update slow fading/vehicle position every 100 ms
-        self.bandwidth = int(400e3)  ## int(1e6)  # bandwidth per RB, 1 MHz
-        # self.bandwidth = 1500
-        self.demand_size = int((4 * 190 + 300) * 8 * 2)  # V2V payload: 1060 Bytes every 100 ms
-        # self.demand_size = 20
+        self.bandwidth = int(180e3)  ## int(1e6)  # bandwidth per RB, 1 MHz
+   
         
 
         self.V2V_Interference_all = np.zeros((self.n_Veh, self.n_neighbor, self.n_RB)) + self.sig2
@@ -387,7 +385,7 @@ class Environ:
         
         # print( "effec_rate", effec_rate)
        
-        C_minus_R=  V2V_Rate- 64/blocklength
+        C_minus_R=  V2V_Rate- 100/blocklength
         fun= math.log(2)*(np.sqrt(blocklength/dispersion))* C_minus_R                 
         error_all= 0.5 - 0.5*special.erf(fun/np.sqrt(2)) # Q(f) = 0.5 - 0.5 erf(f/sqrt(2))                
         
@@ -405,7 +403,7 @@ class Environ:
 
         self.reward_check.append(reward_elements)
         
-        self.network_avg_throughput.append( np.sum((64/blocklength)*(1- error_all) )) ## sum(R*(1-epsilon))
+        self.network_avg_throughput.append( np.sum((100/blocklength)*(1- error_all) )) ## sum(R*(1-epsilon))
         
         if np.max(error_all) < 1e-3:
             self.metric=1
@@ -487,7 +485,7 @@ class Environ:
         
         # print( "effec_rate", effec_rate)
        
-        C_minus_R=  V2V_Rate- 64/blocklength
+        C_minus_R=  V2V_Rate- 100/blocklength
         fun= math.log(2)*(np.sqrt(blocklength/dispersion))* C_minus_R                 
         error_all= 0.5 - 0.5*special.erf(fun/np.sqrt(2)) # Q(f) = 0.5 - 0.5 erf(f/sqrt(2))                
         
@@ -501,7 +499,7 @@ class Environ:
         self.reliability_list_rand.append(np.max(error_all))
         self.reward_check_rand.append(reward_elements)
         
-        self.network_avg_throughput.append( np.sum((64/blocklength)*(1- error_all) ) ) ## sum(R*(1-epsilon))
+        self.network_avg_throughput.append( np.sum((100/blocklength)*(1- error_all) ) ) ## sum(R*(1-epsilon))
         
         # print('errors are', (error_all).reshape(1,-1))
         
