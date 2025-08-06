@@ -84,6 +84,13 @@ def get_state(env, idx=(0,0) ):
     return np.concatenate((V2I_fast, np.reshape(V2V_fast, -1), V2V_interference))
 ##########################################################################
 # -----------------------------------------------------------
+## Simplified MADRL
+# n_hidden_1 = len(get_state(env))*5 +8
+# n_hidden_2 = len(get_state(env))*3
+# n_hidden_3 = len(get_state(env))*2
+# n_input = len(get_state(env=env))
+# n_output = n_RB * len(env.V2V_power_dB_List)
+
 n_hidden_1 = 500
 n_hidden_2 = 250
 n_hidden_3 = 120
@@ -822,6 +829,7 @@ if IS_TEST:
         f.write('features_retained: ' + str(features_retained) + '\n')
         f.write('precision threshold:' + str(precision_threshold_list) + '\n')
        
+
 
 
 
