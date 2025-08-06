@@ -132,10 +132,8 @@ class Environ:
         self.n_neighbor = n_neighbor
         self.time_fast = 0.001
         self.time_slow = 0.1  # update slow fading/vehicle position every 100 ms
-        self.bandwidth = int(400e8)  ## int(1e6)  # bandwidth per RB, 1 MHz
-        # self.bandwidth = 1500
-        self.demand_size = int((4 * 190 + 300) * 8 * 2)  # V2V payload: 1060 Bytes every 100 ms
-        # self.demand_size = 20
+        self.bandwidth = int(180e3)  ## int(1e6)  # bandwidth per RB, 1 MHz
+   
         
 
         self.V2V_Interference_all = np.zeros((self.n_Veh, self.n_neighbor, self.n_RB)) + self.sig2
@@ -681,5 +679,6 @@ class Environ:
     
     def get_first_n_items(self,dictionary, n):
         return dict(list(dictionary.items())[:n])
+
 
 
