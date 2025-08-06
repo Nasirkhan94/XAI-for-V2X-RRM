@@ -72,14 +72,14 @@ def get_first_n_items(dictionary, n):
 def get_state(env, idx=(0,0) ):
     """ Get state from the environment """
         
-    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :] - 80)/60 
+    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :]) 
     
     V2I_fast_names =[ 'V2I_channel_(strongest)', 'V2I_channel_((2nd strongest)', 'V2I_channel_(3rd strongest)', 'V2I_channel_(weakest)']
     V2I_fast_dict= env.create_state_space_dictionary( V2I_fast_names, np.sort(   V2I_fast.reshape(-1))[::-1] )
     sorted_V2I= dict(sorted(  V2I_fast_dict.items(), key=lambda item: item[1], reverse=True))
     # print(sorted_V2I)
     
-    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :] - 80)/60 
+    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :]) 
     V2V_fast_names =['V2V_channel_(Strongest)', 'V2V_channel_(2nd strongest)', 'V2V_channel_(3rd strongest)','V2V_channel_(4th strongest)',\
                       'V2V_channel_(5th strongest)','V2V_channel_(6th strongest)',\
                           'V2V_channel_(7th strongest)','V2V_channel_(8th strongest)','V2V_channel_(9th strongest)',\
@@ -89,7 +89,7 @@ def get_state(env, idx=(0,0) ):
     sorted_V2V= dict(sorted(  V2V_fast_dict.items(), key=lambda item: item[1], reverse=True))
     # print(sorted_V2V)
   
-    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :] - 60) / 60
+    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :])
     V2V_intrfr_names =['Interference power_(strongest)', 'Interference power_(2nd strongest)', 'Interference power_(3rd strongest)', 'Interference power_(weakest)']
     V2V_intrfr_dict= env.create_state_space_dictionary( V2V_intrfr_names, np.sort(    V2V_interference.reshape(-1))[::-1] )
     sorted_V2V_intrfr= dict(sorted(  V2V_intrfr_dict.items(), key=lambda item: item[1], reverse=True))
@@ -112,7 +112,7 @@ def get_state(env, idx=(0,0) ):
 # n_input = len(get_state(env=env))
 # n_output = n_RB * len(env.V2V_power_dB_List)
 
-n_hidden_1 = len(get_state(env))*5
+n_hidden_1 = len(get_state(env))*5 +8
 n_hidden_2 = len(get_state(env))*3
 n_hidden_3 = len(get_state(env))*2
 n_input = len(get_state(env=env))
@@ -286,10 +286,6 @@ if IS_TRAIN:
             env.renew_channel() # update channel slow fading
             env.renew_channels_fastfading() # update channel fast fading
 
-        env.demand = env.demand_size * np.ones((env.n_Veh, env.n_neighbor))
-        env.individual_time_limit = env.time_slow * np.ones((env.n_Veh, env.n_neighbor))
-        env.active_links = np.ones((env.n_Veh, env.n_neighbor), dtype='bool')
-
         for i_step in range(n_step_per_episode):
             time_step = i_episode * n_step_per_episode + i_step
 
@@ -307,7 +303,7 @@ if IS_TRAIN:
             
             ######## compure training performance with random/max power action ####################
             
-            # random baseline
+    
            
             action_all_training_rand[:, :, 0] = np.random.randint(0, n_RB, [n_veh, n_neighbor])  # band
             action_all_training_rand[:, :, 1] = np.random.randint(0, len(env.V2V_power_dB_List), [n_veh, n_neighbor])  # power
@@ -386,14 +382,14 @@ if IS_TRAIN:
 def get_state_test(env, idx=(0,0), ind_episode=1, epsi=0.02):
     """ Get state from the environment """
     
-    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :] - 80)/60 
+    V2I_fast = (env.V2I_channels_with_fastfading[idx[0], :] )
     
     V2I_fast_names =[ 'V2I_channel_(strongest)', 'V2I_channel_((2nd strongest)', 'V2I_channel_(3rd strongest)', 'V2I_channel_(weakest)']
     V2I_fast_dict= env.create_state_space_dictionary( V2I_fast_names, np.sort(   V2I_fast.reshape(-1))[::-1] )
     sorted_V2I= dict(sorted(  V2I_fast_dict.items(), key=lambda item: item[1], reverse=True))
     # print(sorted_V2I)
 
-    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :] - 80)/60 
+    V2V_fast = (env.V2V_channels_with_fastfading[:, env.vehicles[idx[0]].destinations[idx[1]], :])
     V2V_fast_names =['V2V_channel_(Strongest)', 'V2V_channel_(2nd strongest)', 'V2V_channel_(3rd strongest)','V2V_channel_(4th strongest)',\
                       'V2V_channel_(5th strongest)','V2V_channel_(6th strongest)',\
                           'V2V_channel_(7th strongest)','V2V_channel_(8th strongest)','V2V_channel_(9th strongest)',\
@@ -404,7 +400,7 @@ def get_state_test(env, idx=(0,0), ind_episode=1, epsi=0.02):
     # print(sorted_V2V)
         
     
-    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :] - 60) / 60
+    V2V_interference = (-env.V2V_Interference_all[idx[0], idx[1], :] )
     V2V_intrfr_names =['Interference power_(strongest)', 'Interference power_(2nd strongest)', 'Interference power_(3rd strongest)', 'Interference power_(weakest)']
     V2V_intrfr_dict= env.create_state_space_dictionary( V2V_intrfr_names, np.sort(    V2V_interference.reshape(-1))[::-1] )
     sorted_V2V_intrfr= dict(sorted(  V2V_intrfr_dict.items(), key=lambda item: item[1], reverse=True))
@@ -559,119 +555,3 @@ def smooth( Episode_Return,WSZ):
     stop = (np.cumsum(Episode_Return[:-WSZ:-1])[::2]/r)[::-1]
     return np.concatenate((  start , out0, stop  ))
 
-def plot_training_rewards( rewards):
-          # Calculate a moving average of rewards
-          window_size = 1000
-          moving_avg = [np.mean(rewards[i:i+window_size]) for i in range(len(rewards) - window_size + 1)]
-     
-          # Create a time axis for x-axis
-          episodes = range(len(rewards))
-     
-          # Plot the rewards and moving average
-          plt.figure(figsize=(10, 6))
-          plt.plot(episodes, smooth(rewards,105), label='Training Rewards', alpha=0.4)
-          plt.plot(episodes[window_size - 1:], moving_avg, label=f'Moving Average (window={window_size})', color='r')
-          plt.xlabel('Training step')
-          plt.ylabel('Reward per time step ')
-          plt.legend()
-          # plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-          # plt.title('Training Rewards in DRL')
-          plt.grid(True)
-          plt.show()
-          plt.savefig('./figures/_%s_%d'%('training_plot',n_veh)+'.pdf', format='pdf', dpi=1000)
-         
-def plot_training_reliability( rewards):
-          # Calculate a moving average of rewards
-          window_size = 1000
-          moving_avg = [np.mean(rewards[i:i+window_size]) for i in range(len(rewards) - window_size + 1)]
-     
-          # Create a time axis for x-axis
-          episodes = range(len(rewards))
-     
-          # Plot the rewards and moving average
-          # plt.figure(figsize=(10, 6))
-          plt.plot(episodes, smooth(rewards,105), label='Training Rewards', alpha=0.4)
-          plt.plot(episodes[window_size - 1:], moving_avg, label=f'Moving Average (window={window_size})', color='r')
-          # plt.axhline(y=1e-2, color='k', linestyle='-', label='$\epsilon_{o}=10^{-5}$')
-          plt.xlabel('Training step')
-          # plt.ylabel('Network Reliability (1-max $\varepsilon_{k}$)')
-          plt.ylabel('Network Reliability (1-max $\{\\varepsilon_{k} \}$)')
-          # plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-          plt.legend()
-          # plt.title('Training Rewards in DRL')
-          plt.grid(True)
-          plt.show()
-          # plt.savefig('./figures/_%s_%d'%('treliability_plot',n_veh)+'.pdf', format='pdf', dpi=1000)
-
- 
-
-
-
-plot_training_rewards(record_reward_shannon.reshape(-1))
-
-plot_training_reliability(env.reliability_list)
-
-plot_training_reliability(env.network_avg_throughput)
-
-
-# env.plot_training_rewards( record_reward_shannon_shannon.reshape(-1))
-# env.plot_training_rewards( return_log)
-
-####################################
-##################################
-
-# Increase font size globally
-plt.rcParams.update({'font.size': 14})
-# Function to plot training reliability
-def plot_training_combined(rewards,label, color):
-    window_size = 500
-    moving_avg = [np.mean(rewards[i:i+window_size]) for i in range(len(rewards) - window_size + 1)]
-    episodes = range(len(rewards))
-    # Plot the rewards and moving average
-    # plt.plot(episodes, smooth(rewards, 505), label=label, alpha=0.4, color=color)
-    plt.plot(episodes[window_size - 1:], moving_avg,label=label, color=color)
-
-# Load the .mat file
-mat_data = scipy.io.loadmat('reward_4000.mat')
-
-# Extract data from the loaded .mat file
-# Suppose the data you want to plot is stored in a variable named 'data'
-data = mat_data['reward_4000']
-
-# Plotting the data
-fig_width_inches = 7.16  ## 7.16 inches for two column width
-fig_height_inches = 0.8 * fig_width_inches  # Adjust the height as needed
-
-plt.figure(figsize=(fig_width_inches, fig_height_inches))
-# Define sharp colors
-proposed_color = 'red'  # Green
-single_agent_color = 'blue'
-random_allocation_color = 'black'
-full_power_color = 'lime'  # Dark blue
-
-# Example usage
-# plot_training_combined(data.reshape(-1), label='Proposed Multi-agent scheme', color=proposed_color)
-plot_training_combined(record_reward_shannon.reshape(-1), label='Ideal(infinite blocklength scheme) ', color=single_agent_color)
-# plot_training_combined(record_reward_rand.reshape(-1), label='Random Allocation', color=random_allocation_color)
-# plot_training_combined(record_reward_full.reshape(-1), label='Full power', color=full_power_color)
-
-plt.legend()
-plt.show()
-
-record_reward_rand
-
-plt.xlabel('Training step')
-plt.ylabel('Normalized reward')
-plt.legend()
-plt.grid(True)
-
-# Use ScalarFormatter for x-axis ticks
-
-plt.gca().xaxis.set_major_formatter(ticker.ScalarFormatter( useMathText=True))
-plt.gca().xaxis.offsetText.set_fontsize(14)
-plt.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
-# Add more y ticks between 0 and 1
-plt.yticks(np.arange(0, 1.1, 0.1))
-# plt.savefig('./figures/_%s_%d'%('combined_training',n_veh)+'.pdf', format='pdf', dpi=1000)
-# plt.savefig('./figures/_%s_%d'%('combined_training',n_veh)+'.eps', format='eps', dpi=1000)
-plt.show()
