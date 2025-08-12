@@ -1,4 +1,4 @@
-# XAI for Feature Selection and Model Reduction for DRL-based V2X Resource Allocation
+# XAI for DRL based V2X Resource Allocation
 
 This repository contains the (not-so-clean) source code for the paper: Khan, N., Abdallah, A., Celik, A., Eltawil, A. M., & Coleri, S. (2025). Explainable AI-aided Feature Selection and Model Reduction for DRL-based V2X Resource Allocation. IEEE Transactions on Communications.
 
